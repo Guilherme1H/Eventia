@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_background"
+    android:fillViewport="true"
+    tools:context=".EditarPerfilActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_editar_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Editar Perfil"
+            app:titleTextColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView style="@style/FormLabel" android:text="Nome Completo"/>
+            <EditText android:id="@+id/edit_text_nome_completo" style="@style/FormEditText" android:hint="Seu nome completo"/>
+
+            <TextView style="@style/FormLabel" android:text="E-mail"/>
+            <EditText android:id="@+id/edit_text_email" style="@style/FormEditText" android:hint="seu@email.com" android:inputType="textEmailAddress"/>
+
+            <TextView style="@style/FormLabel" android:text="Senha"/>
+            <EditText android:id="@+id/edit_text_senha" style="@style/FormEditText" android:hint="Digite uma nova senha (opcional)" android:inputType="textPassword"/>
+
+            <TextView style="@style/FormLabel" android:text="CPF"/>
+            <EditText android:id="@+id/edit_text_cpf" style="@style/FormEditText" android:hint="000.000.000-00" android:inputType="number"/>
+
+            <TextView style="@style/FormLabel" android:text="Telefone"/>
+            <EditText android:id="@+id/edit_text_telefone" style="@style/FormEditText" android:hint="(00) 00000-0000" android:inputType="phone"/>
+
+            <TextView style="@style/FormLabel" android:text="Data de Nascimento"/>
+            <EditText android:id="@+id/edit_text_data_nascimento" style="@style/FormEditText" android:hint="DD/MM/AAAA" android:inputType="date"/>
+
+            <Button
+                android:id="@+id/button_salvar_perfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:padding="16dp"
+                android:text="Salvar Alterações"
+                app:cornerRadius="12dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

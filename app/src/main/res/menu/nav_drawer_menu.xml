@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Configurações" />
+        <!-- Futuramente podemos adicionar "Ajuda", "Sobre", etc. aqui -->
+    </group>
+
+    <item android:title="Conta">
+        <menu>
+            <item
+                android:id="@+id/drawer_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Sair" />
+        </menu>
+    </item>
+
+</menu>

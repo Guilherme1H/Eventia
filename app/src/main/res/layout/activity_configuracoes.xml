@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_background"
+    tools:context=".ConfiguracoesActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_configuracoes"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="Configurações"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white" />
+
+    <TextView
+        android:id="@+id/option_editar_perfil"
+        style="@style/ProfileOption"
+        android:layout_marginTop="16dp"
+        android:text="Editar Perfil" />
+
+    <TextView
+        android:id="@+id/option_notificacoes"
+        style="@style/ProfileOption"
+        android:text="Notificações" />
+
+    <TextView
+        android:id="@+id/option_privacidade"
+        style="@style/ProfileOption"
+        android:text="Privacidade" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/option_logout_config"
+        style="@style/ProfileOption"
+        android:layout_marginBottom="32dp"
+        android:textColor="@android:color/holo_red_light"
+        android:text="Sair da Conta" />
+
+</LinearLayout>

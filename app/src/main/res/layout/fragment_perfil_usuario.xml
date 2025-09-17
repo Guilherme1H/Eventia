@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_background"
+    android:fillViewport="true"
+    tools:context=".PerfilUsuarioFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp">
+
+        <!-- CABEÇALHO DO PERFIL -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_perfil"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_nome_usuario_perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_image_perfil"
+            tools:text="Nome do Usuário" />
+
+        <TextView
+            android:id="@+id/text_view_email_usuario_perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/light_gray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_nome_usuario_perfil"
+            tools:text="usuario@email.com" />
+
+        <!-- ÍCONE DE CONFIGURAÇÕES/EDITAR - O MAIS IMPORTANTE! -->
+        <ImageButton
+            android:id="@+id/button_configuracoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_settings"
+            android:padding="16dp"
+            app:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!-- SEÇÃO DE EVENTOS FAVORITOS -->
+        <TextView
+            android:id="@+id/title_eventos_favoritos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Eventos Favoritos"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_email_usuario_perfil" />
+
+        <!-- MENSAGEM PARA QUANDO NÃO HÁ FAVORITOS -->
+        <LinearLayout
+            android:id="@+id/layout_sem_favoritos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:padding="24dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/title_eventos_favoritos">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Você ainda não tem favoritos."
+                android:textColor="@color/light_gray"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Clique no ícone de coração nos eventos que você gostar!"
+                android:textColor="@color/medium_gray"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- A LISTA REAL DE FAVORITOS (Virá no futuro) -->
+        <!-- <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_favoritos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/title_eventos_favoritos"
+            tools:listitem="@layout/item_evento" /> -->
+
+        <!-- OPÇÕES ADICIONAIS -->
+        <LinearLayout
+            android:id="@+id/layout_opcoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/layout_sem_favoritos">
+
+            <TextView
+                style="@style/ProfileOption"
+                android:text="Histórico de Compras"
+                android:id="@+id/option_historico"/>
+
+            <TextView
+                style="@style/ProfileOption"
+                android:text="Central de Ajuda"
+                android:id="@+id/option_ajuda"/>
+
+            <TextView
+                style="@style/ProfileOption"
+                android:text="Sair da Conta"
+                android:textColor="@android:color/holo_red_light"
+                android:id="@+id/option_logout"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,13 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- O gradiente com as cores da sua marca -->
+    <gradient
+        android:angle="0"
+        android:startColor="@color/purple_brand"
+        android:endColor="@color/pink_brand"
+        android:type="linear" />
+
+    <!-- Bordas arredondadas -->
+    <corners android:radius="12dp" />
+</shape>

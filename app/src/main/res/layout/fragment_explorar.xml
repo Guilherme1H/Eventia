@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_background"
+    tools:context=".ExplorarFragment">
+
+    <!-- Barra de Pesquisa (Mantida) -->
+    <TextView
+        android:id="@+id/search_bar_explore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext_background"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawablePadding="12dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center_vertical"
+        android:hint="Pesquisar por eventos..."
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_gray" />
+
+    <!-- Título de Categorias (Mantido) -->
+    <TextView
+        android:id="@+id/categories_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Navegar por Categorias"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <!-- Lista de Categorias (Mantida) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_categorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_categoria" />
+
+    <!-- Título de Eventos em Destaque (NOVO) -->
+    <TextView
+        android:id="@+id/eventos_destaque_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Eventos em Destaque"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <!-- LISTA DE EVENTOS (NOVO) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_eventos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_evento_vertical" />
+
+</LinearLayout>

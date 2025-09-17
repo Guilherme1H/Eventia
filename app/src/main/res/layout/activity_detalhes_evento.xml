@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/dark_background"
+    tools:context=".DetalhesEventoActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/gradient_view"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:background="@drawable/gradient_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/image_evento_detalhe"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+
+        <ImageButton
+            android:id="@+id/backButtonDetalhes"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Voltar"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/text_nome_evento_detalhe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/image_evento_detalhe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Nome do Super Evento"/>
+
+        <TextView
+            android:id="@+id/text_data_evento_detalhe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/light_gray"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_calendar"
+            app:drawableTint="@color/light_gray"
+            app:layout_constraintTop_toBottomOf="@id/text_nome_evento_detalhe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="15 de Dezembro, 22:00" />
+
+        <TextView
+            android:id="@+id/text_local_evento_detalhe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/light_gray"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_location"
+            app:drawableTint="@color/light_gray"
+            app:layout_constraintTop_toBottomOf="@id/text_data_evento_detalhe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Arena Hall, São Paulo - SP" />
+
+        <TextView
+            android:id="@+id/text_descricao_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Sobre o Evento"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/text_local_evento_detalhe"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_descricao_evento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/light_gray"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_descricao_titulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Aqui virá a descrição completa e detalhada do evento..." />
+
+        <TextView
+            android:id="@+id/text_preco_label_detalhe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Preço"
+            android:textColor="@color/light_gray"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/button_comprar_ingresso"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_preco_evento_detalhe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/button_comprar_ingresso"
+            app:layout_constraintTop_toTopOf="@id/button_comprar_ingresso"
+            tools:text="R\$ 99,90" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_comprar_ingresso"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="Comprar Ingresso"
+            android:fontFamily="@font/poppins_bold"
+            app:icon="@drawable/ic_tickets"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
