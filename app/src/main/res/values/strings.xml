@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">Eventia</string>
     <string name="logo_da_eventia">Logo da Eventia</string>
-    <string name="open_drawer">Abrir menu de navegação</string>
-    <string name="close_drawer">Fechar menu de navegação</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

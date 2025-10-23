@@ -34,4 +34,3 @@ interface ApiService {
         @Query("password") password: String
     ): Call<List<LoginResponse>>
 }
-data class PasswordResetRequest(val email: String)

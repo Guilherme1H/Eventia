@@ -1,148 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:fillViewport="true"
+    android:background="@color/dark_background"
     tools:context=".CadastroActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white"
+        android:contentDescription="Voltar" />
+
+    <LinearLayout
+        android:id="@+id/inputGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
-
-        <ImageButton
-            android:id="@+id/backButtonCadastro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Voltar"
-            android:padding="8dp"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/title_cadastro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/poppins_bold"
+            android:layout_marginBottom="8dp"
             android:text="Crie sua Conta"
             android:textColor="@color/white"
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/backButtonCadastro" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        <!-- Campos do Formulário com HINT (Texto-Guia) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:text="Preencha os dados para começar a usar o Eventia."
+            android:textColor="@color/light_gray"
+            android:textSize="16sp" />
+
         <EditText
-            android:id="@+id/nomeEditTextCadastro"
-            style="@style/FormEditText"
-            android:layout_marginTop="24dp"
-            android:hint="Nome Completo"
+            android:id="@+id/nomeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Nome completo"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_cadastro" />
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray" />
 
         <EditText
             android:id="@+id/emailEditTextCadastro"
-            style="@style/FormEditText"
-            android:layout_marginTop="16dp"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nomeEditTextCadastro" />
-
-        <EditText
-            android:id="@+id/cpfEditTextCadastro"
-            style="@style/FormEditText"
-            android:layout_width="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:hint="CPF"
-            android:inputType="number"
-            app:layout_constraintEnd_toStartOf="@id/telefoneEditTextCadastro"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emailEditTextCadastro" />
-
-        <EditText
-            android:id="@+id/telefoneEditTextCadastro"
-            style="@style/FormEditText"
-            android:layout_width="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:hint="Telefone"
-            android:inputType="phone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cpfEditTextCadastro"
-            app:layout_constraintTop_toBottomOf="@id/emailEditTextCadastro" />
-
-        <EditText
-            android:id="@+id/dataNascimentoEditTextCadastro"
-            style="@style/FormEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Data de Nascimento (DD/MM/AAAA)"
-            android:inputType="date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cpfEditTextCadastro" />
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray" />
 
         <EditText
             android:id="@+id/senhaEditTextCadastro"
-            style="@style/FormEditText"
-            android:layout_marginTop="16dp"
-            android:autofillHints="password"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edittext_background"
             android:hint="Senha"
             android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dataNascimentoEditTextCadastro" />
-
-        <!-- Resto do arquivo... -->
-        <TextView
-            android:id="@+id/passwordStrengthTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/senhaEditTextCadastro"
-            app:layout_constraintTop_toBottomOf="@id/senhaEditTextCadastro"
-            tools:text="A senha deve conter 8 caracteres."
-            tools:textColor="@android:color/holo_red_light"
-            tools:visibility="visible" />
-
-        <CheckBox
-            android:id="@+id/termsCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:buttonTint="@color/purple_brand"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Li e aceito os Termos de Uso"
-            android:textColor="@color/light_gray"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/passwordStrengthTextView" />
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_gray" />
 
         <Button
-            android:id="@+id/createAccountButtonCadastro"
-            style="@style/PrimaryButtonStyle"
+            android:id="@+id/cadastrarButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_height="56dp"
+            android:background="@drawable/button_background"
             android:text="Cadastrar"
-            app:layout_constraintTop_toBottomOf="@id/termsCheckBox"
-            tools:layout_editor_absoluteX="24dp" />
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    <LinearLayout
+        android:id="@+id/successGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/ic_check_circle"
+            app:tint="@color/purple_brand" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Conta Criada!"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/successMessageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:textColor="@color/light_gray"
+            android:textSize="16sp"
+            tools:text="Seja bem-vindo(a) ao Eventia, Nome do Usuário. Agora você já pode fazer login." />
+
+        <Button
+            android:id="@+id/irParaLoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/button_background"
+            android:text="Ir para o Login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
