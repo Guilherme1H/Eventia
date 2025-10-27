@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="32dp">
 
-        <!-- CABEÇALHO DO PERFIL -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image_perfil"
             android:layout_width="96dp"
@@ -50,7 +49,6 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_nome_usuario_perfil"
             tools:text="usuario@email.com" />
 
-        <!-- ÍCONE DE CONFIGURAÇÕES/EDITAR - O MAIS IMPORTANTE! -->
         <ImageButton
             android:id="@+id/button_configuracoes"
             android:layout_width="wrap_content"
@@ -62,7 +60,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <!-- SEÇÃO DE EVENTOS FAVORITOS -->
         <TextView
             android:id="@+id/title_eventos_favoritos"
             android:layout_width="wrap_content"
@@ -76,7 +73,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_email_usuario_perfil" />
 
-        <!-- MENSAGEM PARA QUANDO NÃO HÁ FAVORITOS -->
         <LinearLayout
             android:id="@+id/layout_sem_favoritos"
             android:layout_width="match_parent"
@@ -123,6 +119,19 @@
             android:layout_marginTop="24dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/layout_sem_favoritos">
+
+            <Button
+                android:id="@+id/button_gerenciar_eventos"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:text="Gerenciar Eventos"
+                app:icon="@drawable/ic_settings"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <TextView
                 style="@style/ProfileOption"

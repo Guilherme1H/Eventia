@@ -13,14 +13,13 @@ import java.util.Locale
 
 class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<EventoAdapter.EventoViewHolder>() {
 
-    // MODIFICADO: Adicionado text_preco_evento
     class EventoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nome: TextView = view.findViewById(R.id.text_nome_evento)
+        val nome: TextView = view.findViewById(R.id.text_titulo_evento)
         val data: TextView = view.findViewById(R.id.text_data_evento)
         val local: TextView = view.findViewById(R.id.text_local_evento)
         val imagem: ImageView = view.findViewById(R.id.image_evento)
         val iconeFavorito: ImageView = view.findViewById(R.id.icon_favorito)
-        val preco: TextView = view.findViewById(R.id.text_preco_evento) // NOVO
+        val preco: TextView = view.findViewById(R.id.text_preco_evento)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder {
@@ -30,14 +29,13 @@ class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<Ev
 
     override fun getItemCount() = eventos.size
 
-    // NOVO: Função para formatar a data
     private fun formatarData(dataIso: String): String {
         return try {
             val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
             val formatter = SimpleDateFormat("dd 'de' MMMM '•' HH:mm", Locale("pt", "BR"))
             formatter.format(parser.parse(dataIso)!!)
         } catch (e: Exception) {
-            dataIso // Em caso de erro, retorna o texto original
+            dataIso
         }
     }
 
@@ -46,17 +44,16 @@ class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<Ev
 
         holder.nome.text = evento.nome
         holder.local.text = evento.local
-
-        // MODIFICADO: Chamando a função de formatação
         holder.data.text = formatarData(evento.data)
 
-        // NOVO: Lógica para exibir o preço
+        // Sua lógica de preço, mantida 100%!
         if (evento.preco > 0.0) {
             holder.preco.text = "R\$ ${"%.2f".format(evento.preco).replace('.', ',')}"
         } else {
             holder.preco.text = "Grátis"
         }
 
+        // Sua lógica do Glide, mantida 100%!
         Glide.with(holder.itemView.context)
             .load(evento.imagemUrl)
             .placeholder(R.drawable.placeholder_image)
@@ -64,7 +61,7 @@ class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<Ev
             .into(holder.imagem)
 
         if (evento.isFavorito) {
-            holder.iconeFavorito.setColorFilter(holder.itemView.context.getColor(R.color.red))
+            holder.iconeFavorito.setColorFilter(holder.itemView.context.getColor(R.color.accent_brand))
         } else {
             holder.iconeFavorito.setColorFilter(holder.itemView.context.getColor(R.color.white))
         }

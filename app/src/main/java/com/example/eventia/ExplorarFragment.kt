@@ -6,26 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.eventia.databinding.FragmentExplorarBinding
 
 class ExplorarFragment : Fragment() {
 
-    private lateinit var categoriasRecyclerView: RecyclerView
+    private var _binding: FragmentExplorarBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var categoriaAdapter: CategoriaAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_explorar, container, false)
+    ): View {
+        _binding = FragmentExplorarBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        categoriasRecyclerView = view.findViewById(R.id.recycler_view_categorias)
+        setupRecyclerView()
+    }
 
-        categoriasRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    private fun setupRecyclerView() {
+        binding.recyclerViewCategorias.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val listaDeCategorias = listOf(
             Categoria("Festas", R.drawable.ic_celebration),
@@ -36,6 +41,11 @@ class ExplorarFragment : Fragment() {
         )
 
         categoriaAdapter = CategoriaAdapter(listaDeCategorias)
-        categoriasRecyclerView.adapter = categoriaAdapter
+        binding.recyclerViewCategorias.adapter = categoriaAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

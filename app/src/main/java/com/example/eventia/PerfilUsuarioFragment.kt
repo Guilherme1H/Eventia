@@ -7,51 +7,68 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
+import com.example.eventia.databinding.FragmentPerfilUsuarioBinding
 
 class PerfilUsuarioFragment : Fragment() {
+
+    private var _binding: FragmentPerfilUsuarioBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_perfil_usuario, container, false)
+    ): View {
+        _binding = FragmentPerfilUsuarioBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        val nomeUsuarioTextView = view.findViewById<TextView>(R.id.text_view_nome_usuario_perfil)
-        val emailUsuarioTextView = view.findViewById<TextView>(R.id.text_view_email_usuario_perfil)
-        val settingsButton = view.findViewById<ImageButton>(R.id.button_configuracoes)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val historicoOption = view.findViewById<TextView>(R.id.option_historico)
-        val ajudaOption = view.findViewById<TextView>(R.id.option_ajuda)
-        val logoutOption = view.findViewById<TextView>(R.id.option_logout)
+        loadUserProfile()
+        setupClickListeners()
+    }
 
+    private fun loadUserProfile() {
         val sharedPreferences = requireActivity().getSharedPreferences("user_profile_prefs", Context.MODE_PRIVATE)
         val nomeUsuario = sharedPreferences.getString("USER_FULL_NAME", "Usuário")
         val emailUsuario = sharedPreferences.getString("USER_EMAIL", "seu@email.com")
 
-        nomeUsuarioTextView.text = nomeUsuario
-        emailUsuarioTextView.text = emailUsuario
+        binding.textViewNomeUsuarioPerfil.text = nomeUsuario
+        binding.textViewEmailUsuarioPerfil.text = emailUsuario
 
-        settingsButton.setOnClickListener {
+        val isAdmin = true
+
+        if (isAdmin) {
+            binding.buttonGerenciarEventos.visibility = View.VISIBLE
+        } else {
+            binding.buttonGerenciarEventos.visibility = View.GONE
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.buttonConfiguracoes.setOnClickListener {
             val intent = Intent(activity, ConfiguracoesActivity::class.java)
             startActivity(intent)
         }
 
-        historicoOption.setOnClickListener {
+        binding.optionHistorico.setOnClickListener {
             Toast.makeText(context, "Tela de Histórico em desenvolvimento.", Toast.LENGTH_SHORT).show()
         }
 
-        ajudaOption.setOnClickListener {
+        binding.optionAjuda.setOnClickListener {
             Toast.makeText(context, "Central de Ajuda em breve!", Toast.LENGTH_SHORT).show()
         }
 
-        logoutOption.setOnClickListener {
+        binding.optionLogout.setOnClickListener {
             fazerLogout()
         }
 
-        return view
+        binding.buttonGerenciarEventos.setOnClickListener {
+            val intent = Intent(requireContext(), AdminEventosActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun fazerLogout() {
@@ -63,5 +80,10 @@ class PerfilUsuarioFragment : Fragment() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         activity?.finish()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

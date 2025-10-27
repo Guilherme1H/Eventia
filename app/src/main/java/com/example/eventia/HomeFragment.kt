@@ -18,7 +18,6 @@ class HomeFragment : Fragment() {
     private lateinit var eventoAdapter: EventoAdapter
     private val listaEventos = mutableListOf<Evento>()
 
-    // Conexão com o Firestore com inicialização PREGUIÇOSA
     private val db by lazy { FirebaseFirestore.getInstance() }
 
     override fun onCreateView(
