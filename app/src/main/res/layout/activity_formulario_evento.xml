@@ -33,24 +33,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Campo de Imagem -->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/image_view_formulario"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_upload"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"/>
-
-            <Button
-                android:id="@+id/button_selecionar_imagem"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="Selecionar Imagem"/>
-
             <!-- Campo Nome do Evento -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -112,6 +94,39 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Campo Descrição -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Descrição do Evento">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_descricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="4"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- NOVO CAMPO PARA URL DA IMAGEM -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="URL da Imagem do Evento">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_url_imagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textUri"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <Button
                 android:id="@+id/button_salvar_evento"

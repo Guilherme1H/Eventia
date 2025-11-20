@@ -1,16 +1,20 @@
 package com.example.eventia
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Evento(
-    val id: String = "",
-    val nome: String = "",
-    val data: String = "",
-    val local: String = "",
-    val imagemUrl: String = "",
-    val descricao: String = "",
-    val preco: Double = 0.0,
+    val id: Int,
+    val nome: String,
+    val data: String,
+    val local: String,
+    val preco: Double,
+    val descricao: String,
+    @SerializedName("imagemUrl")
+    val imagemUrl: String?,
+    @SerializedName("id_usuario")
+    val idUsuario: Int,
     var isFavorito: Boolean = false
 ) : Parcelable

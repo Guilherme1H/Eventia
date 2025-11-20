@@ -5,12 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.eventia.Evento
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
@@ -18,7 +19,7 @@ class HomeFragment : Fragment() {
     private lateinit var eventoAdapter: EventoAdapter
     private val listaEventos = mutableListOf<Evento>()
 
-    private val db by lazy { FirebaseFirestore.getInstance() }
+    private val apiService by lazy { RetrofitClient.instance.create(ApiService::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,24 +37,29 @@ class HomeFragment : Fragment() {
         eventoAdapter = EventoAdapter(listaEventos)
         recyclerView.adapter = eventoAdapter
 
-        buscarEventosDoFirebase()
+        buscarEventos()
     }
 
-    private fun buscarEventosDoFirebase() {
-        db.collection("eventos")
-            .orderBy("data", Query.Direction.ASCENDING)
-            .get()
-            .addOnSuccessListener { result ->
-                listaEventos.clear()
-                for (document in result) {
-                    val evento = document.toObject(Evento::class.java).copy(id = document.id)
-                    listaEventos.add(evento)
-                    Log.d("HomeFragment", "Evento carregado: ${evento.nome}")
+    private fun buscarEventos() {
+        apiService.getEventos().enqueue(object: Callback<List<Evento>> {
+            override fun onResponse(call: Call<List<Evento>>, response: Response<List<Evento>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { eventos ->
+                        listaEventos.clear()
+                        listaEventos.addAll(eventos)
+                        eventoAdapter.notifyDataSetChanged()
+                        Log.d("HomeFragment", "${eventos.size} eventos carregados.")
+                    }
+                } else {
+                    Log.e("HomeFragment", "Erro na resposta: ${response.code()}")
+                    Toast.makeText(context, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
                 }
-                eventoAdapter.notifyDataSetChanged()
             }
-            .addOnFailureListener { exception ->
-                Log.w("HomeFragment", "Erro ao buscar eventos.", exception)
+
+            override fun onFailure(call: Call<List<Evento>>, t: Throwable) {
+                Log.e("HomeFragment", "Falha na chamada da API.", t)
+                Toast.makeText(context, "Falha de conexão.", Toast.LENGTH_SHORT).show()
             }
+        })
     }
 }

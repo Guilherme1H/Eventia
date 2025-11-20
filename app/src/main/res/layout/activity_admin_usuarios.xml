@@ -5,34 +5,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminEventosActivity">
+    tools:context=".AdminUsuariosActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_admin_eventos"
+            android:id="@+id/toolbar_admin_usuarios"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Gerenciar Eventos" />
+            app:title="Gerenciar Usuários" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_admin_eventos"
+        android:id="@+id/recycler_view_admin_usuarios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_admin_evento" />
+        tools:listitem="@layout/item_admin_usuario" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_adicionar_evento"
+        android:id="@+id/fab_adicionar_usuarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        android:contentDescription="Adicionar novo evento" />
+        android:contentDescription="Adicionar novo usuario" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

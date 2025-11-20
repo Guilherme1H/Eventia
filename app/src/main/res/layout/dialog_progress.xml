@@ -6,16 +6,15 @@
     android:padding="20dp">
 
     <ProgressBar
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginEnd="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:text="Salvando..."
-        android:textSize="18sp" />
+        android:text="Salvando, por favor aguarde..."
+        android:textSize="18sp"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

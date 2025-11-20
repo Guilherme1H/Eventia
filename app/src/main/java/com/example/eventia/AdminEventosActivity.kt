@@ -1,17 +1,26 @@
 package com.example.eventia
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventia.databinding.ActivityAdminEventosBinding
-import com.example.eventia.FormularioEventoActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AdminEventosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminEventosBinding
     private lateinit var adminEventoAdapter: AdminEventoAdapter
+    private val apiService by lazy { RetrofitClient.instance.create(ApiService::class.java) }
+    private val formularioLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        loadEventos()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +35,10 @@ class AdminEventosActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupClickListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
         loadEventos()
     }
 
@@ -33,12 +46,12 @@ class AdminEventosActivity : AppCompatActivity() {
         adminEventoAdapter = AdminEventoAdapter(
             eventos = emptyList(),
             onEditClick = { evento ->
-                // TODO: Navegar para a tela de edição
-                Toast.makeText(this, "Editar: ${evento.nome}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, FormularioEventoActivity::class.java)
+                intent.putExtra("EVENTO_PARA_EDITAR", evento)
+                formularioLauncher.launch(intent)
             },
             onDeleteClick = { evento ->
-                // TODO: Implementar a lógica de exclusão com confirmação
-                Toast.makeText(this, "Excluir: ${evento.nome}", Toast.LENGTH_SHORT).show()
+                mostrarDialogoConfirmacao(evento)
             }
         )
 
@@ -51,17 +64,57 @@ class AdminEventosActivity : AppCompatActivity() {
     private fun setupClickListeners() {
         binding.fabAdicionarEvento.setOnClickListener {
             val intent = Intent(this, FormularioEventoActivity::class.java)
-            startActivity(intent)
+            formularioLauncher.launch(intent)
         }
     }
 
     private fun loadEventos() {
-        val listaSimulada = listOf(
-            Evento(id = "1", nome = "Show de Rock", data = "2025-12-10T20:00", local = "Estádio Morumbi", preco = 150.0, imagemUrl = ""),
-            Evento(id = "2", nome = "Festival de Jazz", data = "2025-11-22T18:00", local = "Parque Ibirapuera", preco = 0.0, imagemUrl = ""),
-            Evento(id = "3", nome = "Peça de Teatro", data = "2025-12-05T21:00", local = "Teatro Municipal", preco = 80.0, imagemUrl = "")
-        )
+        apiService.getEventos().enqueue(object: Callback<List<Evento>> {
+            override fun onResponse(call: Call<List<Evento>>, response: Response<List<Evento>>) {
+                if (response.isSuccessful) {
+                    val eventos = response.body() ?: emptyList()
+                    adminEventoAdapter.updateData(eventos)
+                } else {
+                    Toast.makeText(this@AdminEventosActivity, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
+                }
+            }
 
-        adminEventoAdapter.updateData(listaSimulada)
+            override fun onFailure(call: Call<List<Evento>>, t: Throwable) {
+                Log.e("AdminEventosActivity", "Falha na API: ${t.message}", t)
+                Toast.makeText(this@AdminEventosActivity, "Falha de conexão.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun mostrarDialogoConfirmacao(evento: Evento) {
+        AlertDialog.Builder(this)
+            .setTitle("Confirmar Exclusão")
+            .setMessage("Tem certeza que deseja excluir o evento '${evento.nome}'?")
+            .setPositiveButton("Sim") { _, _ ->
+                deletarEvento(evento)
+            }
+            .setNegativeButton("Não", null)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
+    }
+
+    private fun deletarEvento(evento: Evento) {
+        apiService.excluirEvento(evento.id.toString()).enqueue(object : Callback<RegistrationResponse> {
+            override fun onResponse(call: Call<RegistrationResponse>, response: Response<RegistrationResponse>) {
+                if (response.isSuccessful && response.body()?.success == true) {
+                    Toast.makeText(this@AdminEventosActivity, "Evento excluído com sucesso!", Toast.LENGTH_SHORT).show()
+                    loadEventos()
+                } else {
+                    val errorMsg = response.body()?.message ?: "Erro ao excluir o evento."
+                    Toast.makeText(this@AdminEventosActivity, errorMsg, Toast.LENGTH_LONG).show()
+                    Log.e("AdminEventosActivity", "Erro ao deletar: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {
+                Toast.makeText(this@AdminEventosActivity, "Falha de conexão ao tentar excluir.", Toast.LENGTH_SHORT).show()
+                Log.e("AdminEventosActivity", "Falha na API ao deletar: ${t.message}", t)
+            }
+        })
     }
 }

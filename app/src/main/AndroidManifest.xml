@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eventia"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FormularioUsuarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditarUsuarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminUsuariosActivity"
+            android:exported="false" />
         <activity
             android:name=".FormularioEventoActivity"
             android:exported="false" />

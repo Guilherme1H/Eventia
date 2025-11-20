@@ -1,6 +1,5 @@
 package com.example.eventia
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -31,16 +30,14 @@ class PerfilUsuarioFragment : Fragment() {
     }
 
     private fun loadUserProfile() {
-        val sharedPreferences = requireActivity().getSharedPreferences("user_profile_prefs", Context.MODE_PRIVATE)
-        val nomeUsuario = sharedPreferences.getString("USER_FULL_NAME", "Usuário")
-        val emailUsuario = sharedPreferences.getString("USER_EMAIL", "seu@email.com")
+        val nomeUsuario = SessionManager.getUserName(requireContext())
 
         binding.textViewNomeUsuarioPerfil.text = nomeUsuario
-        binding.textViewEmailUsuarioPerfil.text = emailUsuario
+        // binding.textViewEmailUsuarioPerfil.text = emailUsuario
 
-        val isAdmin = true
+        val userRole = SessionManager.getRole(requireContext())
 
-        if (isAdmin) {
+        if (userRole == "admin") {
             binding.buttonGerenciarEventos.visibility = View.VISIBLE
         } else {
             binding.buttonGerenciarEventos.visibility = View.GONE
@@ -49,8 +46,7 @@ class PerfilUsuarioFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.buttonConfiguracoes.setOnClickListener {
-            val intent = Intent(activity, ConfiguracoesActivity::class.java)
-            startActivity(intent)
+            Toast.makeText(context, "Tela de Configurações em desenvolvimento.", Toast.LENGTH_SHORT).show()
         }
 
         binding.optionHistorico.setOnClickListener {
@@ -72,14 +68,15 @@ class PerfilUsuarioFragment : Fragment() {
     }
 
     private fun fazerLogout() {
-        val editor = requireActivity().getSharedPreferences("user_profile_prefs", Context.MODE_PRIVATE).edit()
-        editor.clear()
-        editor.apply()
+        SessionManager.logout(requireContext())
 
-        val intent = Intent(activity, MainActivity::class.java)
+        val intent = Intent(requireActivity(), MainActivity::class.java)
+
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
         startActivity(intent)
-        activity?.finish()
+
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {

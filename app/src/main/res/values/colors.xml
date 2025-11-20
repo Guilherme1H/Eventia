@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ==================================================== -->
-    <!--       PALETA DE CORES SEMÂNTICA (TEMA PRINCIPAL)       -->
-    <!-- Usaremos estes nomes no app, não os códigos de cor   -->
-    <!-- ==================================================== -->
 
-    <!-- Cores de Fundo e Superfície (Usando as suas cores!) -->
-    <color name="background_app">#111827</color>   <!-- Seu 'dark_background' -->
-    <color name="surface_card">#1F2937</color>     <!-- Seu 'grey_800', para Cards -->
-
-    <!-- Cores Primárias e de Destaque (Usando as suas cores!) -->
-    <color name="primary_brand">#FFA855F7</color>   <!-- Seu 'purple_brand' -->
-    <color name="accent_brand">#D93B6A</color>      <!-- Seu 'pink_brand' -->
-
-    <!-- Cores de Texto -->
-    <color name="text_primary">#FFFFFFFF</color>      <!-- Texto principal, títulos (Branco) -->
-    <color name="text_secondary">#D1D5DB</color>    <!-- Seu 'light_gray' para textos secundários -->
-
+    <color name="background_app">#111827</color>
+    <color name="surface_card">#1F2937</color>
+    <color name="primary_brand">#FFA855F7</color>
+    <color name="accent_brand">#D93B6A</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#D1D5DB</color>
     <color name="gradient_start">#4c0082</color>
     <color name="gradient_end">#2e0854</color>
     <color name="status_error">#FF0000</color>

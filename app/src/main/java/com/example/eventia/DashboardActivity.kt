@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.eventia.databinding.ActivityDashboardBinding
+
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
@@ -18,5 +19,13 @@ class DashboardActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.bottomNavView.setupWithNavController(navController)
+
+        val userRole = SessionManager.getRole(this)
+
+        val cleanedRole = userRole?.trim()?.replace("'", "")
+
+        if (cleanedRole != "admin") {
+            binding.bottomNavView.menu.findItem(R.id.navigation_admin).isVisible = false
+        }
     }
 }

@@ -1,4 +1,3 @@
-// CadastroActivity.kt
 package com.example.eventia
 
 import android.content.Intent
@@ -12,23 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class CadastroActivity : AppCompatActivity() {
 
-    private lateinit var apiService: ApiService
+    private val apiService by lazy {
+        RetrofitClient.instance.create(ApiService::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
 
-        val BASE_URL = "http://10.0.2.2/api_eventia/"
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        apiService = retrofit.create(ApiService::class.java)
 
         val nomeEditText = findViewById<EditText>(R.id.nomeEditText)
         val emailEditText = findViewById<EditText>(R.id.emailEditTextCadastro)
@@ -60,7 +53,7 @@ class CadastroActivity : AppCompatActivity() {
 
                     override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {
                         Log.e("CADASTRO_API", "Falha na chamada: ${t.message}", t)
-                        Toast.makeText(this@CadastroActivity, "Erro de conexão: ${t.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@CadastroActivity, "Erro de conexão: Verifique o IP e se o XAMPP está rodando.", Toast.LENGTH_LONG).show()
                     }
                 })
             } else {

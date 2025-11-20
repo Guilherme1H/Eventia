@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<EventoAdapter.EventoViewHolder>() {
 
@@ -30,10 +31,11 @@ class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<Ev
     override fun getItemCount() = eventos.size
 
     private fun formatarData(dataIso: String): String {
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd 'de' MMMM '•' HH:mm", Locale("pt", "BR"))
         return try {
-            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
-            val formatter = SimpleDateFormat("dd 'de' MMMM '•' HH:mm", Locale("pt", "BR"))
-            formatter.format(parser.parse(dataIso)!!)
+            val parsedDate = parser.parse(dataIso)
+            if (parsedDate != null) formatter.format(parsedDate) else dataIso
         } catch (e: Exception) {
             dataIso
         }
@@ -41,30 +43,30 @@ class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<Ev
 
     override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
         val evento = eventos[position]
+        val context = holder.itemView.context
 
         holder.nome.text = evento.nome
         holder.local.text = evento.local
         holder.data.text = formatarData(evento.data)
 
-        // Sua lógica de preço, mantida 100%!
         if (evento.preco > 0.0) {
-            holder.preco.text = "R\$ ${"%.2f".format(evento.preco).replace('.', ',')}"
+            holder.preco.text = "R\$ ${String.format(Locale("pt", "BR"), "%.2f", evento.preco)}"
         } else {
             holder.preco.text = "Grátis"
         }
 
-        // Sua lógica do Glide, mantida 100%!
-        Glide.with(holder.itemView.context)
+        Glide.with(context)
             .load(evento.imagemUrl)
             .placeholder(R.drawable.placeholder_image)
             .error(R.drawable.error_image)
             .into(holder.imagem)
 
-        if (evento.isFavorito) {
-            holder.iconeFavorito.setColorFilter(holder.itemView.context.getColor(R.color.accent_brand))
+        val corFavorito = if (evento.isFavorito) {
+            ContextCompat.getColor(context, R.color.accent_brand)
         } else {
-            holder.iconeFavorito.setColorFilter(holder.itemView.context.getColor(R.color.white))
+            ContextCompat.getColor(context, R.color.white)
         }
+        holder.iconeFavorito.setColorFilter(corFavorito)
 
         holder.iconeFavorito.setOnClickListener {
             evento.isFavorito = !evento.isFavorito
@@ -72,7 +74,6 @@ class EventoAdapter(private val eventos: List<Evento>) : RecyclerView.Adapter<Ev
         }
 
         holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
             val intent = Intent(context, DetalhesEventoActivity::class.java)
             intent.putExtra("EXTRA_EVENTO", evento)
             context.startActivity(intent)
