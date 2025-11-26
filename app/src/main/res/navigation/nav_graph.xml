@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_perfil_usuario" />
 
     <fragment
-        android:id="@+id/navigation_admin"
+        android:id="@+id/nav_admin_hub"
         android:name="com.example.eventia.ui.fragments.AdminHubFragment"
         android:label="Painel do Administrador"
         tools:layout="@layout/fragment_admin_hub" />

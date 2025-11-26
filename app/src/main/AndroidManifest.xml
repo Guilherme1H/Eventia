@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,8 +20,18 @@
         android:theme="@style/Theme.Eventia"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".TestActivity"
+            android:name=".HistoricoActivity"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                tools:node="remove" />
+        </provider> <!-- Suas Activities -->
         <activity
             android:name=".FormularioUsuarioActivity"
             android:exported="false" />
@@ -50,7 +61,18 @@
             android:name=".CadastroActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".DetalhesEventoActivity" />
+        <activity
+            android:name=".DetalhesEventoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CarrinhoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PagamentoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CompraConcluidaActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

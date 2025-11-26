@@ -10,17 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <View
-            android:id="@+id/gradient_view"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:background="@drawable/gradient_background"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/image_evento_detalhe"
@@ -30,8 +21,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
+            tools:src="@tools:sample/backgrounds/scenic"
+            android:foreground="@drawable/gradient_background" />
 
         <ImageButton
             android:id="@+id/backButtonDetalhes"
@@ -122,40 +113,98 @@
             tools:text="Aqui virá a descrição completa e detalhada do evento..." />
 
         <TextView
-            android:id="@+id/text_preco_label_detalhe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Preço"
-            android:textColor="@color/light_gray"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@id/button_comprar_ingresso"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
             android:id="@+id/text_preco_evento_detalhe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/button_comprar_ingresso"
-            app:layout_constraintTop_toTopOf="@id/button_comprar_ingresso"
+            app:layout_constraintTop_toBottomOf="@id/text_descricao_evento"
             tools:text="R\$ 99,90" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_comprar_ingresso"
+        <LinearLayout
+            android:id="@+id/quantity_selector"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/button_adicionar_carrinho"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageButton
+                android:id="@+id/button_minus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_remove"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/textViewQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"/>
+
+            <ImageButton
+                android:id="@+id/button_plus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_add"
+                app:tint="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ingresso_adquirido"
+            android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
-            android:text="Comprar Ingresso"
-            android:fontFamily="@font/poppins_bold"
-            app:icon="@drawable/ic_tickets"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/button_disabled_background"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_tickets"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Ingresso Adquirido"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_adicionar_carrinho"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Adicionar ao Carrinho"
+            android:fontFamily="@font/poppins_bold"
+            app:icon="@drawable/ic_cart"
+            app:iconGravity="textStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

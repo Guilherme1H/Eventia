@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_background"
+    android:padding="24dp"
+    tools:context=".CompraConcluidaActivity">
+
+    <ImageView
+        android:id="@+id/image_view_sucesso"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_check_circle"
+        app:layout_constraintBottom_toTopOf="@id/text_sucesso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:tint="@color/success_green" />
+
+    <TextView
+        android:id="@+id/text_sucesso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Compra realizada com sucesso!"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintBottom_toTopOf="@id/text_subtitulo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_view_sucesso" />
+
+    <TextView
+        android:id="@+id/text_subtitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Seus ingressos foram adicionados ao seu perfil e estão prontos para serem usados."
+        android:textAlignment="center"
+        android:textColor="@color/light_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/button_ver_ingressos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_sucesso" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_ver_ingressos"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="32dp"
+        android:text="Ver meus ingressos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

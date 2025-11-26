@@ -1,65 +1,83 @@
 package com.example.eventia
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.eventia.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var eventoAdapter: EventoAdapter
-    private val listaEventos = mutableListOf<Evento>()
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
-    private val apiService by lazy { RetrofitClient.instance.create(ApiService::class.java) }
+    private lateinit var eventoAdapter: EventoAdapter
+    private lateinit var favoriteManager: FavoriteManager
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        favoriteManager = FavoriteManager(requireContext(), SessionManager.getUserId(requireContext()))
 
-        recyclerView = view.findViewById(R.id.recycler_view_eventos)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-
-        eventoAdapter = EventoAdapter(listaEventos)
-        recyclerView.adapter = eventoAdapter
-
-        buscarEventos()
+        setupRecyclerView()
+        observeViewModel()
     }
 
-    private fun buscarEventos() {
-        apiService.getEventos().enqueue(object: Callback<List<Evento>> {
-            override fun onResponse(call: Call<List<Evento>>, response: Response<List<Evento>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { eventos ->
-                        listaEventos.clear()
-                        listaEventos.addAll(eventos)
-                        eventoAdapter.notifyDataSetChanged()
-                        Log.d("HomeFragment", "${eventos.size} eventos carregados.")
-                    }
-                } else {
-                    Log.e("HomeFragment", "Erro na resposta: ${response.code()}")
-                    Toast.makeText(context, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
-                }
+    private fun observeViewModel() {
+        homeViewModel.eventos.observe(viewLifecycleOwner, Observer { eventosDaApi ->
+            eventosDaApi.forEach { evento ->
+                evento.isFavorito = favoriteManager.isFavorite(evento.id)
             }
-
-            override fun onFailure(call: Call<List<Evento>>, t: Throwable) {
-                Log.e("HomeFragment", "Falha na chamada da API.", t)
-                Toast.makeText(context, "Falha de conexão.", Toast.LENGTH_SHORT).show()
-            }
+            eventoAdapter.atualizarLista(eventosDaApi)
         })
+
+        homeViewModel.erro.observe(viewLifecycleOwner, Observer { mensagemErro ->
+            Toast.makeText(context, mensagemErro, Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_cart -> {
+                startActivity(Intent(requireContext(), CarrinhoActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        eventoAdapter = EventoAdapter(mutableListOf(), favoriteManager) { evento ->
+            val intent = Intent(context, DetalhesEventoActivity::class.java)
+            intent.putExtra("EXTRA_EVENTO", evento)
+            startActivity(intent)
+        }
+
+        binding.recyclerViewEventos.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewEventos.adapter = eventoAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

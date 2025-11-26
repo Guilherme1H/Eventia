@@ -1,75 +1,103 @@
 package com.example.eventia
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
-import com.google.android.material.button.MaterialButton
-import java.text.SimpleDateFormat
+import com.example.eventia.databinding.ActivityDetalhesEventoBinding
+import java.text.NumberFormat
 import java.util.Locale
 
 class DetalhesEventoActivity : AppCompatActivity() {
 
-    private fun formatarData(dataIso: String): String {
-        return try {
-            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
-            val formatter = SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'às' HH:mm", Locale("pt", "BR"))
-            formatter.format(parser.parse(dataIso)!!)
-        } catch (e: Exception) {
-            dataIso
-        }
-    }
+    private lateinit var binding: ActivityDetalhesEventoBinding
+    private var evento: Evento? = null
+    private var quantidade = 1
+
+    private lateinit var carrinhoManager: CarrinhoManager
+    private lateinit var ingressoManager: IngressoManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalhes_evento)
+        binding = ActivityDetalhesEventoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val backButton = findViewById<ImageButton>(R.id.backButtonDetalhes)
-        backButton.setOnClickListener {
+        evento = intent.getParcelableExtra<Evento>("EXTRA_EVENTO")
+
+        if (evento == null) {
+            Toast.makeText(this, "Erro ao carregar evento.", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
+        val userId = SessionManager.getUserId(this)
+        carrinhoManager = CarrinhoManager(this, userId)
+        ingressoManager = IngressoManager(this, userId)
+
+        setupUI()
+        setupClickListeners()
+        checkTicketStatus()
+    }
+
+    private fun checkTicketStatus() {
+        evento?.let {
+            val isPurchased = ingressoManager.getIngressosCompradosIds().contains(it.id.toString())
+            if (isPurchased) {
+                binding.quantitySelector.isVisible = false
+                binding.buttonAdicionarCarrinho.isVisible = false
+                binding.layoutIngressoAdquirido.isVisible = true
+            } else {
+                binding.quantitySelector.isVisible = true
+                binding.buttonAdicionarCarrinho.isVisible = true
+                binding.layoutIngressoAdquirido.isVisible = false
+            }
+        }
+    }
+
+    private fun setupUI() {
+        evento?.let {
+            Glide.with(this)
+                .load(it.imagemUrl)
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.placeholder_image)
+                .into(binding.imageEventoDetalhe)
+
+            binding.textNomeEventoDetalhe.text = it.nome
+            binding.textDescricaoEvento.text = it.descricao
+            binding.textLocalEventoDetalhe.text = it.local
+            binding.textDataEventoDetalhe.text = it.data
+
+            val formatadorMoeda = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+            binding.textPrecoEventoDetalhe.text = formatadorMoeda.format(it.preco)
+
+            // Atenção: O ID do seu TextView de quantidade no XML era text_view_quantity
+            binding.textViewQuantity.text = quantidade.toString()
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.backButtonDetalhes.setOnClickListener {
             finish()
         }
 
-        val evento = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("EXTRA_EVENTO", Evento::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra<Evento>("EXTRA_EVENTO")
+        binding.buttonMinus.setOnClickListener {
+            if (quantidade > 1) {
+                quantidade--
+                binding.textViewQuantity.text = quantidade.toString()
+            }
         }
 
-        if (evento != null) {
-            Log.d("DetalhesActivity", "URL da imagem para carregar: ${evento.imagemUrl}")
+        binding.buttonPlus.setOnClickListener {
+            quantidade++
+            binding.textViewQuantity.text = quantidade.toString()
+        }
 
-            val imageView = findViewById<ImageView>(R.id.image_evento_detalhe)
-
-            Glide.with(this)
-                .load(evento.imagemUrl)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageView)
-
-            findViewById<TextView>(R.id.text_nome_evento_detalhe).text = evento.nome
-            findViewById<TextView>(R.id.text_local_evento_detalhe).text = evento.local
-            findViewById<TextView>(R.id.text_descricao_evento).text = evento.descricao
-            findViewById<TextView>(R.id.text_data_evento_detalhe).text = formatarData(evento.data)
-
-            val precoTextView = findViewById<TextView>(R.id.text_preco_evento_detalhe)
-            if (evento.preco > 0.0) {
-                precoTextView.text = "R\$ ${"%.2f".format(evento.preco).replace('.', ',')}"
-            } else {
-                precoTextView.text = "Grátis"
+        binding.buttonAdicionarCarrinho.setOnClickListener {
+            evento?.let { evt ->
+                carrinhoManager.adicionarItem(evt, quantidade)
+                Toast.makeText(this, "'${evt.nome}' adicionado ao carrinho!", Toast.LENGTH_SHORT).show()
             }
-
-            val comprarButton = findViewById<MaterialButton>(R.id.button_comprar_ingresso)
-            comprarButton.setOnClickListener {
-                Toast.makeText(this, "Funcionalidade de compra ainda não implementada.", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Log.e("DetalhesActivity", "ERRO CRÍTICO: O objeto Evento chegou NULO na tela de detalhes.")
         }
     }
 }

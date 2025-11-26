@@ -18,7 +18,9 @@ object SessionManager {
 
     fun saveSession(context: Context, user: LoginResponse) {
         val editor = getPreferences(context).edit()
-        editor.putInt(KEY_USER_ID, user.id)
+
+        editor.putString(KEY_USER_ID, user.id.toString())
+
         editor.putString(KEY_USER_NAME, user.name)
         editor.putString(KEY_USER_EMAIL, user.email)
         editor.putString(KEY_USER_ROLE, user.role)
@@ -30,8 +32,16 @@ object SessionManager {
         return getPreferences(context).getString(KEY_USER_NAME, "Usuário") ?: "Usuário"
     }
 
-    fun getRole(context: Context): String? {
-        return getPreferences(context).getString(KEY_USER_ROLE, null)
+    fun getEmail(context: Context): String {
+        return getPreferences(context).getString(KEY_USER_EMAIL, "seu@email.com") ?: "seu@email.com"
+    }
+
+    fun getRole(context: Context): String {
+        return getPreferences(context).getString(KEY_USER_ROLE, "user") ?: "user"
+    }
+
+    fun getUserId(context: Context): String {
+        return getPreferences(context).getString(KEY_USER_ID, "") ?: ""
     }
 
     fun isLoggedIn(context: Context): Boolean {

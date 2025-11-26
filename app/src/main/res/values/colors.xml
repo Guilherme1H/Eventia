@@ -28,5 +28,7 @@
     <color name="gradient_end_color">#2e0854</color>
     <color name="medium_gray">#808080</color>
     <color name="red">#FF0000</color>
+    <color name="card_background">#2C2C2C</color>
+    <color name="success_green">#4CAF50</color>
 
 </resources>

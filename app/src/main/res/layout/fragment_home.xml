@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- Seu layout antigo da home, mas agora dentro de um Fragment -->
-    <!-- A Toolbar e a BottomNavigationView NÃO estão aqui -->
-
     <TextView
         android:id="@+id/search_bar"
         android:layout_width="0dp"

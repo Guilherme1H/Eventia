@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Imagem Principal do Evento -->
         <ImageView
             android:id="@+id/image_evento"
             android:layout_width="0dp"
@@ -27,7 +26,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <!-- Ícone de Favorito -->
         <ImageView
             android:id="@+id/icon_favorito"
             android:layout_width="48dp"
@@ -42,7 +40,6 @@
             android:layout_marginEnd="4dp"
             android:contentDescription="Favoritar evento"/>
 
-        <!-- Título do Evento -->
         <TextView
             android:id="@+id/text_titulo_evento"
             android:layout_width="0dp"
@@ -57,7 +54,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Nome do Evento Muito Longo Para Testar Quebra de Linha" />
 
-        <!-- Data e Hora do Evento -->
         <ImageView
             android:id="@+id/icon_data"
             android:layout_width="16dp"
@@ -82,7 +78,6 @@
             app:layout_constraintBottom_toBottomOf="@id/icon_data"
             tools:text="28 de Dezembro, 2025 ・ 22:00" />
 
-        <!-- Local do Evento -->
         <ImageView
             android:id="@+id/icon_local"
             android:layout_width="16dp"
@@ -110,7 +105,6 @@
             app:layout_constraintBottom_toBottomOf="@id/icon_local"
             tools:text="Espaço Unimed, São Paulo - SP" />
 
-        <!-- ***** NOVO: TEXTO DO PREÇO ***** -->
         <TextView
             android:id="@+id/text_preco_evento"
             android:layout_width="wrap_content"

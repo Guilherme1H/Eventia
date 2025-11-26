@@ -12,6 +12,7 @@ data class Evento(
     val local: String,
     val preco: Double,
     val descricao: String,
+    val categoria: String?,
     @SerializedName("imagemUrl")
     val imagemUrl: String?,
     @SerializedName("id_usuario")

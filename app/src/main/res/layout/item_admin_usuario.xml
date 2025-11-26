@@ -35,7 +35,6 @@
             app:layout_constraintEnd_toEndOf="@id/text_admin_nome_usuario"
             tools:text="usuario@email.com"/>
 
-        <!-- BOTÃO NOVO -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_admin_editar_usuario"
             style="@style/Widget.Material3.Button.TextButton.Icon"

@@ -38,7 +38,7 @@ interface ApiService {
     @GET("login.php")
     fun loginUser(@Query("email") email: String, @Query("password") password: String): Call<List<LoginResponse>>
 
-    @GET("get_users.php")
+@GET("listar_usuarios.php")
     fun getUsuarios(): Call<List<LoginResponse>>
 
     @FormUrlEncoded

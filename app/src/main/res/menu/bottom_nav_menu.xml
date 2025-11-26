@@ -22,7 +22,7 @@
         android:title="Perfil"/>
 
     <item
-        android:id="@+id/navigation_admin"
+        android:id="@+id/nav_admin_hub"
         android:icon="@drawable/ic_admin_panel"
     android:title="Admin" />
 

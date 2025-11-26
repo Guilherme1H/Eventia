@@ -6,7 +6,6 @@
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"
             android:title="Configurações" />
-        <!-- Futuramente podemos adicionar "Ajuda", "Sobre", etc. aqui -->
     </group>
 
     <item android:title="Conta">
