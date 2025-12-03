@@ -61,6 +61,17 @@
         android:textColor="@color/white"
         android:textColorHint="@color/light_gray" />
 
+    <!-- NOVO: CheckBox para Mantenha-me Conectado -->
+    <CheckBox
+        android:id="@+id/checkBox_rememberMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mantenha-me conectado"
+        android:textColor="@color/light_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:buttonTint="@color/white" />
+
     <TextView
         android:id="@+id/esqueciSenhaTextView"
         android:layout_width="match_parent"

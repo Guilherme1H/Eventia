@@ -5,11 +5,13 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import com.google.android.material.appbar.MaterialToolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,12 +29,16 @@ class FormularioEventoActivity : AppCompatActivity() {
     private lateinit var editTextDescricao: EditText
     private lateinit var editTextUrlImagem: EditText
     private lateinit var buttonSalvarEvento: Button
-    private lateinit var toolbar: Toolbar
+    private lateinit var spinnerCategoria: Spinner
+    private lateinit var toolbar: MaterialToolbar
 
     private val calendar = Calendar.getInstance()
     private var eventoParaEditar: Evento? = null
     private lateinit var progressDialog: AlertDialog
     private val apiService by lazy { RetrofitClient.instance.create(ApiService::class.java) }
+
+    private val categorias = listOf("Festas", "Shows", "Teatro", "Esportes", "Palestras")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +51,7 @@ class FormularioEventoActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { finish() }
 
         setupProgressDialog()
+        setupSpinner()
         setupClickListeners()
 
         eventoParaEditar = intent.getParcelableExtra("EVENTO_PARA_EDITAR")
@@ -64,16 +71,32 @@ class FormularioEventoActivity : AppCompatActivity() {
         editTextDescricao = findViewById(R.id.edit_text_descricao)
         editTextUrlImagem = findViewById(R.id.edit_text_url_imagem)
         buttonSalvarEvento = findViewById(R.id.button_salvar_evento)
+        spinnerCategoria = findViewById(R.id.spinner_categoria)
+    }
+
+    private fun setupSpinner() {
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            categorias
+        )
+        spinnerCategoria.adapter = adapter
     }
 
     private fun preencherFormularioParaEdicao() {
         supportActionBar?.title = "Editar Evento"
         eventoParaEditar?.let { evento ->
             editTextNome.setText(evento.nome)
-            editTextLocal.setText(evento.local)
+            editTextLocal.setText(evento.local.replace('\n', ' ').replace('\r', ' ').trim())
             editTextDescricao.setText(evento.descricao)
             editTextPreco.setText(evento.preco.toString())
             editTextUrlImagem.setText(evento.imagemUrl)
+
+            val categoriaIndex = categorias.indexOf(evento.categoria)
+            if (categoriaIndex >= 0) {
+                spinnerCategoria.setSelection(categoriaIndex)
+            }
+
 
             try {
                 val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
@@ -112,13 +135,14 @@ class FormularioEventoActivity : AppCompatActivity() {
 
         val nome = editTextNome.text.toString()
         val data = editTextData.text.toString()
-        val local = editTextLocal.text.toString()
+        val local = editTextLocal.text.toString().replace('\n', ' ').replace('\r', ' ').trim()
         val preco = editTextPreco.text.toString()
         val descricao = editTextDescricao.text.toString()
         val imagemUrl = editTextUrlImagem.text.toString()
-        val idUsuario = 1
+        val categoria = spinnerCategoria.selectedItem.toString()
+        val idUsuario = SessionManager.getUserId(this).toIntOrNull() ?: 1
 
-        apiService.criarEvento(nome, data, local, preco, descricao, imagemUrl, idUsuario).enqueue(object: Callback<RegistrationResponse> {
+        apiService.criarEvento(nome, data, local, preco, descricao, imagemUrl, idUsuario, categoria).enqueue(object: Callback<RegistrationResponse> {
             override fun onResponse(call: Call<RegistrationResponse>, response: Response<RegistrationResponse>) {
                 handleResponse(response, "Evento criado com sucesso!")
             }
@@ -135,12 +159,13 @@ class FormularioEventoActivity : AppCompatActivity() {
         val id = eventoParaEditar!!.id
         val nome = editTextNome.text.toString()
         val data = editTextData.text.toString()
-        val local = editTextLocal.text.toString()
+        val local = editTextLocal.text.toString().replace('\n', ' ').replace('\r', ' ').trim()
         val preco = editTextPreco.text.toString()
         val descricao = editTextDescricao.text.toString()
         val imagemUrl = editTextUrlImagem.text.toString()
+        val categoria = spinnerCategoria.selectedItem.toString()
 
-        apiService.atualizarEvento(id, nome, data, local, preco, descricao, imagemUrl).enqueue(object : Callback<RegistrationResponse> {
+        apiService.atualizarEvento(id, nome, data, local, preco, descricao, imagemUrl, categoria).enqueue(object : Callback<RegistrationResponse> {
             override fun onResponse(call: Call<RegistrationResponse>, response: Response<RegistrationResponse>) {
                 handleResponse(response, "Evento atualizado com sucesso!")
             }

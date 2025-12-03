@@ -9,4 +9,10 @@
         app:showAsAction="ifRoom"
         app:iconTint="@android:color/white" />
 
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Sair"
+        app:showAsAction="never" />
+
 </menu>

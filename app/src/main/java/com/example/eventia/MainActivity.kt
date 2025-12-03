@@ -1,5 +1,6 @@
 package com.example.eventia
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private val apiService by lazy { RetrofitClient.instance.create(ApiService::class.java) }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,10 +34,12 @@ class MainActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.loginButton)
         val esqueciSenhaTextView = findViewById<TextView>(R.id.esqueciSenhaTextView)
         val cadastroTextView = findViewById<TextView>(R.id.createAccountTextView)
+        val rememberMeCheckBox = findViewById<CheckBox>(R.id.checkBox_rememberMe)
 
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
+            val rememberMe = rememberMeCheckBox.isChecked
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Por favor, preencha o email e a senha.", Toast.LENGTH_SHORT).show()
@@ -48,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                         if (userList != null && userList.isNotEmpty()) {
                             val user = userList[0]
 
-                            SessionManager.saveSession(this@MainActivity, user)
+                            SessionManager.saveSession(this@MainActivity, user, rememberMe)
 
                             Toast.makeText(this@MainActivity, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
 
@@ -70,7 +75,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         esqueciSenhaTextView.setOnClickListener {
-            Toast.makeText(this, "Função ainda não implementada.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EsqueciSenhaActivity::class.java)
+            startActivity(intent)
         }
 
         cadastroTextView.setOnClickListener {

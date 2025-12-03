@@ -1,73 +1,95 @@
 package com.example.eventia
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.LayoutInflater
 import android.widget.Toast
-import androidx.core.view.WindowCompat
+import com.example.eventia.databinding.ActivityEsqueciSenhaBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class EsqueciSenhaActivity : AppCompatActivity() {
 
-    private lateinit var inputGroup: LinearLayout
-    private lateinit var emailRecuperacaoEditText: EditText
-    private lateinit var enviarButton: Button
-    private lateinit var backButton: ImageButton
-
-    private lateinit var successGroup: LinearLayout
-    private lateinit var successMessageTextView: TextView
-    private lateinit var voltarLoginButton: Button
+    private lateinit var binding: ActivityEsqueciSenhaBinding
+    private val apiService by lazy { RetrofitClient.instance.create(ApiService::class.java) }
+    private lateinit var progressDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        setContentView(R.layout.activity_esqueci_senha)
+        binding = ActivityEsqueciSenhaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        backButton = findViewById(R.id.backButton)
-        inputGroup = findViewById(R.id.inputGroup)
-        emailRecuperacaoEditText = findViewById(R.id.emailRecuperacaoEditText)
-        enviarButton = findViewById(R.id.enviarButton)
-
-        successGroup = findViewById(R.id.successGroup)
-        successMessageTextView = findViewById(R.id.successMessageTextView)
-        voltarLoginButton = findViewById(R.id.voltarLoginButton)
-
-        setupClickListeners()
+        setupToolbar()
+        setupProgressDialog()
+        setupListeners()
     }
 
-    private fun setupClickListeners() {
-        backButton.setOnClickListener {
-            if (successGroup.visibility == View.VISIBLE) {
-                finish()
-            } else {
-                onBackPressedDispatcher.onBackPressed()
-            }
-        }
+    private fun setupToolbar() {
+        // Usa a Toolbar definida no XML para navegação
+        binding.toolbarReset.setNavigationOnClickListener { finish() }
+    }
 
-        enviarButton.setOnClickListener {
-            val email = emailRecuperacaoEditText.text.toString().trim()
-            if (email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                showSuccessScreen(email)
-            } else {
+    private fun setupListeners() {
+        binding.buttonSolicitarReset.setOnClickListener {
+            val email = binding.editTextEmailReset.text.toString().trim()
+            if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, "Por favor, insira um e-mail válido.", Toast.LENGTH_SHORT).show()
+            } else {
+                requestPasswordReset(email)
             }
-        }
-
-        voltarLoginButton.setOnClickListener {
-            finish()
         }
     }
 
-    private fun showSuccessScreen(email: String) {
-        backButton.visibility = View.GONE
+    private fun requestPasswordReset(email: String) {
+        showProgressDialog()
+        binding.buttonSolicitarReset.isEnabled = false
 
-        inputGroup.visibility = View.GONE
+        val request = ResetPasswordRequest(email)
+        apiService.requestPasswordReset(request).enqueue(object : Callback<RegistrationResponse> {
+            override fun onResponse(call: Call<RegistrationResponse>, response: Response<RegistrationResponse>) {
+                hideProgressDialog()
+                binding.buttonSolicitarReset.isEnabled = true
 
-        successMessageTextView.text = "Enviamos as instruções de recuperação para $email. Não se esqueça de checar a caixa de spam."
-        successGroup.visibility = View.VISIBLE
+                // O servidor PHP retorna 200 OK e a mensagem de sucesso por segurança,
+                // independentemente de o email existir ou não.
+                if (response.isSuccessful && response.body()?.success == true) {
+                    Toast.makeText(this@EsqueciSenhaActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                    finish()
+                } else {
+                    // Trata possíveis erros do servidor (e.g., erro 500 ou JSON inválido)
+                    Toast.makeText(this@EsqueciSenhaActivity, "Erro ao processar a solicitação. Tente novamente.", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {
+                hideProgressDialog()
+                binding.buttonSolicitarReset.isEnabled = true
+                Toast.makeText(this@EsqueciSenhaActivity, "Falha na conexão: Verifique sua internet.", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    // Funções auxiliares para o diálogo de progresso
+
+    private fun setupProgressDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = LayoutInflater.from(this)
+        builder.setView(inflater.inflate(R.layout.dialog_progress, null))
+        builder.setCancelable(false)
+        progressDialog = builder.create()
+    }
+
+    private fun showProgressDialog() {
+        if (::progressDialog.isInitialized && !progressDialog.isShowing) {
+            progressDialog.show()
+        }
+    }
+
+    private fun hideProgressDialog() {
+        if (::progressDialog.isInitialized && progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
     }
 }

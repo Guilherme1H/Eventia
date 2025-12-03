@@ -1,128 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_background"
+    android:background="@color/background_app"
+    android:padding="24dp"
     tools:context=".EsqueciSenhaActivity">
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_reset"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@android:color/transparent"
-        android:padding="8dp"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white"
-        android:contentDescription="Voltar" />
-
-    <LinearLayout
-        android:id="@+id/inputGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Recuperar Senha"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/text_titulo_reset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Esqueceu sua senha?"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="28sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="Informe o e-mail da sua conta e enviaremos um link de recuperação."
-            android:textColor="@color/light_gray"
-            android:textSize="16sp"
-            android:gravity="center"/>
+    <TextView
+        android:id="@+id/text_instrucao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Insira o e-mail associado à sua conta. Enviaremos as instruções de recuperação."
+        android:textColor="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/text_titulo_reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <EditText
-            android:id="@+id/emailRecuperacaoEditText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="E-mail"
+        app:layout_constraintTop_toBottomOf="@id/text_instrucao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_email_reset"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Email"
+            android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/light_gray" />
+            android:maxLength="50"/>
 
-        <Button
-            android:id="@+id/enviarButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/button_background"
-            android:text="Enviar Link"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/successGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/ic_check_circle"
-            app:tint="@color/purple_brand" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Verifique seu e-mail!"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/successMessageTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:gravity="center"
-            android:textColor="@color/light_gray"
-            android:textSize="16sp"
-            tools:text="Enviamos as instruções de recuperação para seuemail@exemplo.com. Não se esqueça de checar a caixa de spam." />
-
-        <Button
-            android:id="@+id/voltarLoginButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/button_background"
-            android:text="Voltar para o Login"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button_solicitar_reset"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:text="Enviar"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

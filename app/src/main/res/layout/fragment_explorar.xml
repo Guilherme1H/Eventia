@@ -8,21 +8,18 @@
     android:background="@color/dark_background"
     tools:context=".ExplorarFragment">
 
-    <TextView
-        android:id="@+id/search_bar_explore"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edittext_background"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawablePadding="12dp"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="center_vertical"
-        android:hint="Pesquisar por eventos..."
-        android:padding="16dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Pesquisar por eventos..."
         android:textColor="@color/white"
-        android:textColorHint="@color/light_gray" />
+        android:textColorHint="@color/light_gray"
+        />
 
     <TextView
         android:id="@+id/categories_title"

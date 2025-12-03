@@ -27,7 +27,6 @@ class EventoAdapter(
                 onItemClicked(evento)
             }
 
-            // Sua lógica original, mantida
             binding.textTituloEvento.text = evento.nome
             binding.textLocalEvento.text = evento.local
             binding.textDataEvento.text = formatarData(evento.data)
@@ -38,8 +37,10 @@ class EventoAdapter(
                 binding.textPrecoEvento.text = "Grátis"
             }
 
+            val imageUrl = evento.imagemUrl ?: ""
+
             Glide.with(context)
-                .load(evento.imagemUrl)
+                .load(imageUrl)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
                 .into(binding.imageEvento)

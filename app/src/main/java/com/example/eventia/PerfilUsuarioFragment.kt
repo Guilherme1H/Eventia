@@ -98,19 +98,24 @@ class PerfilUsuarioFragment : Fragment() {
             override fun onFailure(call: Call<List<Evento>>, t: Throwable) {
                 setLoadingState(false)
                 handleApiError()
-                Toast.makeText(context, "Falha de conexão: ${t.message}", Toast.LENGTH_SHORT).show()
+                if (context != null) {
+                    Toast.makeText(context, "Falha de conexão: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
 
     private fun setupClickListeners() {
-        binding.buttonConfiguracoes.setOnClickListener { startActivity(Intent(requireContext(), EditarPerfilActivity::class.java)) }
+
         binding.optionHistorico.setOnClickListener {
             startActivity(Intent(requireContext(), HistoricoActivity::class.java))
         }
-        binding.optionAjuda.setOnClickListener { Toast.makeText(context, "Em desenvolvimento.", Toast.LENGTH_SHORT).show() }
+
         binding.optionLogout.setOnClickListener { fazerLogout() }
-        binding.buttonGerenciarEventos.setOnClickListener { startActivity(Intent(requireContext(), AdminEventosActivity::class.java)) }
+
+        binding.buttonGerenciarEventos.setOnClickListener {
+            startActivity(Intent(requireContext(), AdminEventosActivity::class.java))
+        }
     }
 
     private fun setLoadingState(isLoading: Boolean) {

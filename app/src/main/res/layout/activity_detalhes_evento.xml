@@ -11,18 +11,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp">
-
-        <ImageView
-            android:id="@+id/image_evento_detalhe"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic"
-            android:foreground="@drawable/gradient_background" />
+        android:paddingBottom="24dp"> <ImageView
+        android:id="@+id/image_evento_detalhe"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic"
+        android:foreground="@drawable/gradient_background" />
 
         <ImageButton
             android:id="@+id/backButtonDetalhes"
@@ -117,13 +115,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_descricao_evento"
-            tools:text="R\$ 99,90" />
+            tools:text="R$ 99,90" />
 
         <LinearLayout
             android:id="@+id/quantity_selector"
@@ -131,8 +129,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@id/button_adicionar_carrinho"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/text_preco_evento_detalhe"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -164,15 +162,34 @@
                 app:tint="@color/white"/>
         </LinearLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_adicionar_carrinho"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="Adicionar ao Carrinho"
+            android:fontFamily="@font/poppins_bold"
+            app:icon="@drawable/ic_cart"
+            app:iconGravity="textStart"
+            app:layout_constraintTop_toBottomOf="@id/quantity_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <LinearLayout
             android:id="@+id/layout_ingresso_adquirido"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/button_disabled_background"
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/text_preco_evento_detalhe"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -193,19 +210,6 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_adicionar_carrinho"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="16dp"
-            android:text="Adicionar ao Carrinho"
-            android:fontFamily="@font/poppins_bold"
-            app:icon="@drawable/ic_cart"
-            app:iconGravity="textStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

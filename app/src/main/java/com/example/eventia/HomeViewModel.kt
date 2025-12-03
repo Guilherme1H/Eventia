@@ -20,11 +20,32 @@ class HomeViewModel : ViewModel() {
     val erro: LiveData<String> get() = _erro
 
     init {
-        carregarEventos()
+        carregarEventos(null)
     }
 
-    private fun carregarEventos() {
-        apiService.getEventos().enqueue(object : Callback<List<Evento>> {
+    fun carregarEventos(categoria: String?) {
+        val call: Call<List<Evento>> = if (categoria.isNullOrEmpty() || categoria == "Todos") {
+            apiService.getEventos()
+        } else {
+            apiService.getEventosPorCategoria(categoria)
+        }
+
+        executeCall(call, "Filtro: $categoria")
+    }
+
+    fun searchEvents(query: String) {
+        if (query.isBlank()) {
+            carregarEventos(null)
+            return
+        }
+
+        val call = apiService.searchEvents(query)
+
+        executeCall(call, "Busca: $query")
+    }
+
+    private fun executeCall(call: Call<List<Evento>>, logContext: String) {
+        call.enqueue(object : Callback<List<Evento>> {
             override fun onResponse(call: Call<List<Evento>>, response: Response<List<Evento>>) {
                 if (response.isSuccessful) {
                     val todosOsEventos = response.body() ?: emptyList()
@@ -34,10 +55,10 @@ class HomeViewModel : ViewModel() {
                     }
 
                     _eventos.value = eventosFuturos
-                    Log.d("HomeViewModel", "${eventosFuturos.size} eventos futuros carregados.")
+                    Log.d("HomeViewModel", "${eventosFuturos.size} eventos carregados ($logContext).")
 
                 } else {
-                    _erro.value = "Falha ao carregar eventos."
+                    _erro.value = "Falha ao carregar eventos. Código: ${response.code()}"
                 }
             }
 

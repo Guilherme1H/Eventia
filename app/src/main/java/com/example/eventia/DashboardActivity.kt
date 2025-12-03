@@ -1,6 +1,9 @@
 package com.example.eventia
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,6 +38,29 @@ class DashboardActivity : AppCompatActivity() {
 
         handleIntentNavigation()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_cart -> {
+                val intent = Intent(this, CarrinhoActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_logout -> {
+                SessionManager.logout(this)
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    // ---------------------------------------
 
     private fun handleIntentNavigation() {
         val navigateTo = intent.getStringExtra("NAVIGATE_TO")

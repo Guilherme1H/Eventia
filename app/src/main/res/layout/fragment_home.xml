@@ -4,22 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    android:background="@color/dark_background"
+    tools:context="HomeFragment">
 
-    <TextView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edittext_background"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawablePadding="12dp"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:text="Pesquisar eventos, shows..."
-        android:textColor="@color/light_gray"
-        android:textSize="16sp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Pesquisar eventos, shows..."
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

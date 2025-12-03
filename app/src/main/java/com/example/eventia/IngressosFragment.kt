@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventia.databinding.FragmentIngressosBinding
-import com.example.eventia.utils.DateUtils // Importa nossa classe ajudante
+import com.example.eventia.utils.DateUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,9 +49,16 @@ class IngressosFragment : Fragment() {
 
     private fun setupRecyclerView() {
         ingressoAdapter = EventoAdapter(mutableListOf(), null) { evento ->
-            val intent = Intent(context, DetalhesEventoActivity::class.java)
-            intent.putExtra("EXTRA_EVENTO", evento)
-            startActivity(intent)
+            val ingressoComprado = ingressoManager.getIngressosComprados()
+                .firstOrNull { it.eventoId == evento.id }
+
+            if (ingressoComprado != null) {
+                val intent = Intent(context, VisualizacaoIngressoActivity::class.java)
+                intent.putExtra("EXTRA_INGRESSO", ingressoComprado) // Envia o objeto IngressoComprado
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "Detalhes do ingresso não encontrados.", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.recyclerViewMeusIngressos.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewMeusIngressos.adapter = ingressoAdapter
@@ -71,6 +78,7 @@ class IngressosFragment : Fragment() {
                 if (response.isSuccessful) {
                     val todosOsEventos = response.body() ?: emptyList()
                     val idsIngressosComprados = ingressoManager.getIngressosCompradosIds()
+
                     val eventosComprados = todosOsEventos.filter { idsIngressosComprados.contains(it.id.toString()) }
 
                     val ingressosValidos = eventosComprados.filter { evento ->

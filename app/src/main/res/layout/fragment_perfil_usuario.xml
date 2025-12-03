@@ -49,17 +49,6 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_nome_usuario_perfil"
             tools:text="usuario@email.com" />
 
-        <ImageButton
-            android:id="@+id/button_configuracoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="16dp"
-            android:src="@drawable/ic_settings"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
-
         <TextView
             android:id="@+id/title_eventos_favoritos"
             android:layout_width="wrap_content"
@@ -219,11 +208,6 @@
                 android:id="@+id/option_historico"
                 style="@style/ProfileOption"
                 android:text="Histórico de Compras" />
-
-            <TextView
-                android:id="@+id/option_ajuda"
-                style="@style/ProfileOption"
-                android:text="Central de Ajuda" />
 
             <TextView
                 android:id="@+id/option_logout"

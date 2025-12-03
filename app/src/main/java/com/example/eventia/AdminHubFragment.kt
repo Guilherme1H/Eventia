@@ -42,9 +42,6 @@ class AdminHubFragment : Fragment() {
     }
 
     private fun setupAdminView() {
-        binding.toolbarAdminHub.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
 
         binding.cardManageEvents.setOnClickListener {
             val intent = Intent(requireActivity(), AdminEventosActivity::class.java)

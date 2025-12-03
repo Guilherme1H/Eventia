@@ -7,7 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoriaAdapter(private val categorias: List<Categoria>) : RecyclerView.Adapter<CategoriaAdapter.CategoriaViewHolder>() {
+class CategoriaAdapter(
+    private val categorias: List<Categoria>,
+    private val onCategoriaClick: (Categoria) -> Unit
+) : RecyclerView.Adapter<CategoriaAdapter.CategoriaViewHolder>() {
 
     class CategoriaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nome: TextView = view.findViewById(R.id.text_nome_categoria)
@@ -25,5 +28,10 @@ class CategoriaAdapter(private val categorias: List<Categoria>) : RecyclerView.A
         val categoria = categorias[position]
         holder.nome.text = categoria.nome
         holder.icone.setImageResource(categoria.icone)
+
+        // NOVO: Configura o listener de clique no item
+        holder.itemView.setOnClickListener {
+            onCategoriaClick(categoria)
+        }
     }
 }

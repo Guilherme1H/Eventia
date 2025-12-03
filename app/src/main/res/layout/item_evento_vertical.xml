@@ -100,10 +100,9 @@
             android:textColor="@color/text_secondary"
             app:layout_constraintStart_toEndOf="@id/icon_local"
             app:layout_constraintEnd_toStartOf="@id/text_preco_evento"
-            app:layout_constraintEnd_toEndOf="@id/text_titulo_evento"
-            app:layout_constraintTop_toTopOf="@id/icon_local"
-            app:layout_constraintBottom_toBottomOf="@id/icon_local"
-            tools:text="Espaço Unimed, São Paulo - SP" />
+        app:layout_constraintTop_toTopOf="@id/icon_local"
+        app:layout_constraintBottom_toBottomOf="@id/icon_local"
+        tools:text="Espaço Unimed, São Paulo - SP" />
 
         <TextView
             android:id="@+id/text_preco_evento"
@@ -119,7 +118,7 @@
             app:layout_constraintBottom_toBottomOf="@id/text_local_evento"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_local_evento"
-            tools:text="R\$ 99,90" />
+            tools:text="R$ 99,90" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

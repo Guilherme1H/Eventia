@@ -31,7 +31,7 @@
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
                 tools:node="remove" />
-        </provider> <!-- Suas Activities -->
+        </provider>
         <activity
             android:name=".FormularioUsuarioActivity"
             android:exported="false" />
@@ -73,6 +73,10 @@
         <activity
             android:name=".CompraConcluidaActivity"
             android:exported="false" />
+        <activity
+            android:name=".VisualizacaoIngressoActivity"
+            android:exported="false"
+            android:parentActivityName=".DashboardActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

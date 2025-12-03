@@ -30,7 +30,15 @@ data class UpdateUserRequest(
     val role: String?
 )
 
+data class ResetPasswordRequest(
+    val email: String
+)
+
 interface ApiService {
+
+    @GET("buscar_eventos.php")
+    fun searchEvents(@Query("query") query: String): Call<List<Evento>>
+
 
     @POST("cadastro.php")
     fun registerUser(@Body request: RegisterRequest): Call<RegistrationResponse>
@@ -38,7 +46,10 @@ interface ApiService {
     @GET("login.php")
     fun loginUser(@Query("email") email: String, @Query("password") password: String): Call<List<LoginResponse>>
 
-@GET("listar_usuarios.php")
+    @POST("solicitar_reset_senha.php")
+    fun requestPasswordReset(@Body request: ResetPasswordRequest): Call<RegistrationResponse>
+
+    @GET("listar_usuarios.php")
     fun getUsuarios(): Call<List<LoginResponse>>
 
     @FormUrlEncoded
@@ -60,6 +71,9 @@ interface ApiService {
     @GET("listar_eventos.php")
     fun getEventos(): Call<List<Evento>>
 
+    @GET("listar_eventos.php")
+    fun getEventosPorCategoria(@Query("categoria") categoria: String): Call<List<Evento>>
+
     @FormUrlEncoded
     @POST("criar_evento.php")
     fun criarEvento(
@@ -69,7 +83,8 @@ interface ApiService {
         @Field("preco") preco: String,
         @Field("descricao") descricao: String,
         @Field("imagem_url") imagemUrl: String,
-        @Field("id_usuario") idUsuario: Int
+        @Field("id_usuario") idUsuario: Int,
+        @Field("categoria") categoria: String
     ): Call<RegistrationResponse>
 
     @FormUrlEncoded
@@ -81,7 +96,8 @@ interface ApiService {
         @Field("local") local: String,
         @Field("preco") preco: String,
         @Field("descricao") descricao: String,
-        @Field("imagem_url") imagemUrl: String
+        @Field("imagem_url") imagemUrl: String,
+        @Field("categoria") categoria: String
     ): Call<RegistrationResponse>
 
     @FormUrlEncoded

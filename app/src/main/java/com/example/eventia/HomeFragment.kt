@@ -2,15 +2,18 @@ package com.example.eventia
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventia.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -25,7 +28,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -34,7 +36,13 @@ class HomeFragment : Fragment() {
         favoriteManager = FavoriteManager(requireContext(), SessionManager.getUserId(requireContext()))
 
         setupRecyclerView()
+        setupSearchView()
         observeViewModel()
+    }
+
+    private fun setupSearchView() {
+        binding.searchBar.setOnQueryTextListener(this)
+        binding.searchBar.queryHint = "Pesquisar eventos, shows..."
     }
 
     private fun observeViewModel() {
@@ -46,23 +54,10 @@ class HomeFragment : Fragment() {
         })
 
         homeViewModel.erro.observe(viewLifecycleOwner, Observer { mensagemErro ->
-            Toast.makeText(context, mensagemErro, Toast.LENGTH_SHORT).show()
-        })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_cart -> {
-                startActivity(Intent(requireContext(), CarrinhoActivity::class.java))
-                true
+            if (mensagemErro != null && mensagemErro.isNotEmpty()) {
+                Toast.makeText(context, mensagemErro, Toast.LENGTH_SHORT).show()
             }
-            else -> super.onOptionsItemSelected(item)
-        }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -74,6 +69,20 @@ class HomeFragment : Fragment() {
 
         binding.recyclerViewEventos.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewEventos.adapter = eventoAdapter
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        binding.searchBar.clearFocus()
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (!newText.isNullOrBlank()) {
+            homeViewModel.searchEvents(newText)
+        } else {
+            homeViewModel.carregarEventos(null)
+        }
+        return true
     }
 
     override fun onDestroyView() {
